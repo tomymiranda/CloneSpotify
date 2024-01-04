@@ -21,10 +21,10 @@ const { title } = Astro.props;
 	<body>
 		{/*es el div global de la aplicación */}
 		<div id="app" class="relative h-screen p-2 gap-2 items-stretch">
-			<aside class="[grid-area:aside] flex-col flex overflow-y-auto bg-red-500">
+			<aside class="[grid-area:aside] flex-col flex overflow-y-auto">
 				<AsideMenu />
 			</aside>
-			<main class="[grid-area:main] rounded-lg bg-zinc-900 overflow-y-auto">
+			<main class="[grid-area:main]  bg-zinc-900 rounded-lg overflow-y-auto">
 				
 			</main>
 			<footer class="[grid-area:player] min-h-[80px]">
@@ -50,7 +50,7 @@ const { title } = Astro.props;
 <style is:global>
 	
 	html {
-		font-family: system-ui, sans-serif;
+		font-family: 'Circular', sans-serif;
 		background: #191414;
 		background-size: 224px;
 	}
