@@ -26,8 +26,12 @@ export const Player = ({}) => {
                 cancion actual...
             </div>
 
-            <div>
-                Reproductor
+            <div className="grid place-content-center gap-4 flex-1">
+                <div className="flex justify-center">
+                    <button className="p-2 bg-gray-200 rounded-full">
+                        <Pause />
+                    </button>
+                </div>
             </div>
 
             <div>
