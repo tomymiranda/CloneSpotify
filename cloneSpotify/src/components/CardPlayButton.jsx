@@ -18,14 +18,15 @@ export const CardPlayButton = ({id}) => {
         fetch(`/api/get-info-playlist.json?id=${id}`)
         .then(response => response.json())
         .then(data => {
-            const {songs, playlist} = data
+            
+            const {playlist,songs } = data
+            
             setIsPlaying(true)
             setCurrentMusic({songs, playlist, song: songs[0]})
 
+            console.log("songs", songs)
+            console.log("playlist", playlist)
         })
-        
-        console.log("songs", songs)
-        console.log("playlist", playlist)
     }
 
     
