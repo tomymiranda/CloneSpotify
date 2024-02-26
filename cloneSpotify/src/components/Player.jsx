@@ -87,7 +87,7 @@ export const Player = ({}) => {
                     defaultValue={[100]}
                     min={0}
                     max={100}
-                    className="w-24"
+                    className="w-20 bg-gray-200 rounded-full h-1"
                     onValueChange={(value) => {
                         const [newValue] = value
                         const volumeValue = newValue / 100
