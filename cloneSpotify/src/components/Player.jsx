@@ -25,21 +25,18 @@ color='black'
 
 export const Player = ({}) => {
     //con esto remplazo el estado local por uno global y sincronizo estado de dos componentes
-    const {isPlaying, setIsPlaying} = usePlayStore(state => state)//el state state es para traerme todo del usePlayStpre
+    const {isPlaying, setIsPlaying, currentMusic, setCurrentMusic} = usePlayStore(state => state)//el state state es para traerme todo del usePlayStpre
     const audioRef = useRef()
-    const [audio, setAudio] = useState(null)
+
+    useEffect(() => {
+        isPlaying ? audioRef.current.play() : audioRef.current.pause()
+    }, [isPlaying])
 
     useEffect(() => {
         audioRef.current.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
     }, [])
 
     const handleClick = () => {
-        if(isPlaying) {
-            audioRef.current.pause()
-        } else {
-        
-        audioRef.current.play()
-        }
         setIsPlaying(!isPlaying)
     }
 
