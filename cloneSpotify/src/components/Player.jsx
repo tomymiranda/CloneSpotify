@@ -48,17 +48,32 @@ export const VolumeSilence = () => (<svg
 );
 
 export const VolumeControl = () => {
-    
-    const volume = usePlayStore(state => state.volume)
+    const volume = usePlayStore(state => state.setVolume)
     const setVolume = usePlayStore(state => state.setVolume)
+    const previousVolumeRef = useRef(volume)
+
+
+    const isSilenced = volume < 0.1
+
+    const handleClickVolume = () =>{
+        if (isSilenced) {
+            setVolume(previousVolumeRef.current)
+        } else {
+        previousVolumeRef.current = volume
+        setVolume(0)
+        }
+    }  
 
     return (
         <div className="flex justify-center gap-x-2 text-white">
-            {volume < 0.1 ? <VolumeSilence /> : <Volume />}
+            <button className="opacity-70 hover:opacity-100 transition"  onClick={handleClickVolume}> 
+                {volume < 0.1 ? <VolumeSilence /> : <Volume />}
+            </button>
             <Slider 
             defaultValue={[100]}
             min={0}
             max={100}
+            value={[volume * 100]} // porq sino no cambia el volumen por mas que se mueva el slider
             className="w-20 bg-gray-200 rounded-full h-1"
             onValueChange={(value) => {
                 const [newValue] = value
@@ -74,19 +89,22 @@ export const VolumeControl = () => {
 
 export const Player = ({}) => {
     //con esto remplazo el estado local por uno global y sincronizo estado de dos componentes
-    const {isPlaying, setIsPlaying, currentMusic, setCurrentMusic} = usePlayStore(state => state)//el state state es para traerme todo del usePlayStpre
+    const {isPlaying, setIsPlaying, currentMusic, volume} = usePlayStore(state => state)//el state state es para traerme todo del usePlayStpre
     const audioRef = useRef()
-    const volumeRef = useRef(1)
 
     useEffect(() => {
         isPlaying ? audioRef.current.play() : audioRef.current.pause()
     }, [isPlaying])
 
     useEffect(() => {
+        audioRef.current.volume = volume
+    }, [volume])
+
+    useEffect(() => {
         const {playlist, song, songs} = currentMusic
         if(song){
             const src = `/music/${playlist?.id}/0${song.id}.mp3`
-            audioRef.current.volume = volumeRef.current
+            audioRef.current.volume = volume
             audioRef.current.src = src
             audioRef.current.play()
         }
